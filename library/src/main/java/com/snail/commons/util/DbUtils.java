@@ -370,7 +370,8 @@ public class DbUtils {
         }
 
         public Cursor build() {
-            String sql = String.format("select %s from %s%s%s%s%s%s%s", whats, table, where, and, or, groupBy, limit, offset);
+            String sql = String.format("select %s from %s%s%s%s%s%s%s%s", whats, table, where, and, or, 
+                    groupBy, limit, offset, orderBy);
             String[] args = new String[values.size()];
             for (int i = 0; i < args.length; i++) {
                 args[i] = values.get(i).toString();
