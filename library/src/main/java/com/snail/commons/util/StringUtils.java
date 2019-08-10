@@ -1,10 +1,11 @@
 package com.snail.commons.util;
 
 import android.text.TextUtils;
-import androidx.annotation.NonNull;
 
 import java.util.Locale;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
 
 /**
  * date: 2019/8/7 11:15
@@ -72,7 +73,7 @@ public class StringUtils {
      * @return 如果bytes为null则返回null，如果bytes长度为0返回""，其他返回正常转换的字符串
      */
     public static String toHex(byte[] bytes) {
-        return toHex(bytes, null);
+        return toHex(bytes, " ");
     }
 
     /**
@@ -112,7 +113,7 @@ public class StringUtils {
      * @return 如果bytes为null则返回null，如果bytes长度为0返回""，其他返回正常转换的字符串
      */
     public static String toBinary(byte[] bytes) {
-        return toBinary(bytes, null);
+        return toBinary(bytes, " ");
     }
 
     /**
