@@ -160,13 +160,16 @@ public final class ToastUtils {
         });
     }
 
-    private static void postToMainThread(Runnable runnable) {
+    private static void postToMainThread(final Runnable runnable) {
         if (toast == null) {
             handler = new Handler(AppHolder.getInstance().getMainLooper());
-            Looper.prepare();
-            toast = Toast.makeText(AppHolder.getInstance().getContext(), "", Toast.LENGTH_SHORT);
-            handler.post(runnable);
-            Looper.loop();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    toast = Toast.makeText(AppHolder.getInstance().getContext(), "", Toast.LENGTH_SHORT);
+                    runnable.run();
+                }
+            });
         } else if (Looper.myLooper() == AppHolder.getInstance().getMainLooper()) {
             runnable.run();
         } else {
