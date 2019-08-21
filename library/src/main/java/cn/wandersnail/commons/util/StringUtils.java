@@ -1,4 +1,4 @@
-package com.snail.commons.util;
+package cn.wandersnail.commons.util;
 
 import android.text.TextUtils;
 

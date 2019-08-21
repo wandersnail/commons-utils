@@ -1,4 +1,4 @@
-package com.snail.commons.util.entity;
+package cn.wandersnail.commons.util.entity;
 
 import androidx.annotation.NonNull;
 import androidx.core.os.EnvironmentCompat;

@@ -1,4 +1,4 @@
-package com.snail.commons.util;
+package cn.wandersnail.commons.util;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -16,8 +16,6 @@ import android.os.StatFs;
 import android.os.storage.StorageManager;
 import android.provider.Settings;
 
-import com.snail.commons.util.entity.Storage;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -31,6 +29,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.core.os.EnvironmentCompat;
+import cn.wandersnail.commons.util.entity.Storage;
 
 /**
  * 系统的工具类

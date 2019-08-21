@@ -1,13 +1,14 @@
-package com.snail.commons.util;
+package cn.wandersnail.commons.util;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Build;
-import androidx.annotation.NonNull;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * date: 2019/8/7 17:22

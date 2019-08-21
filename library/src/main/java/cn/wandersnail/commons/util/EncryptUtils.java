@@ -1,18 +1,20 @@
-package com.snail.commons.util;
+package cn.wandersnail.commons.util;
 
 import android.util.Base64;
-import androidx.annotation.NonNull;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Random;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import androidx.annotation.NonNull;
 
 /**
  * date: 2019/8/7 16:19

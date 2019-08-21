@@ -1,10 +1,8 @@
-package com.snail.commons.util;
+package cn.wandersnail.commons.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 /**
  * so库动态加载工具类
