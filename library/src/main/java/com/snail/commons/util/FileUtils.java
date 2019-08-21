@@ -609,7 +609,7 @@ public class FileUtils {
                 realPath = cursor.getString(index);
             }
             cursor.close();
-            return realPath;
+            return realPath == null ? uri.getPath() : realPath;
         }
     }
 

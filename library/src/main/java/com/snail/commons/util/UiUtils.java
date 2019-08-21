@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import com.snail.commons.AppHolder;
+import cn.wandersnail.commons.base.AppHolder;
 
 /**
  * date: 2019/8/7 23:27

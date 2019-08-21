@@ -5,12 +5,11 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
-import com.snail.commons.AppHolder;
-
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import cn.wandersnail.commons.base.AppHolder;
 
 /**
  * 单例Toast工具类，依赖AppHolder，需要在AppHolder初始化后方可使用
@@ -24,23 +23,15 @@ public final class ToastUtils {
     private static Handler handler;
     
     public static void reset() {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                weakRef = null;
-                toast.cancel();
-                toast = Toast.makeText(AppHolder.getInstance().getContext(), "", Toast.LENGTH_SHORT);
-            }
+        postToMainThread(() -> {
+            weakRef = null;
+            toast.cancel();
+            toast = Toast.makeText(AppHolder.getInstance().getContext(), "", Toast.LENGTH_SHORT);
         });
     }
     
     public static void cancel() {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                toast.cancel();
-            }
-        });
+        postToMainThread(() -> toast.cancel());
     }
 
     /**
@@ -54,12 +45,7 @@ public final class ToastUtils {
      *                         notification
      */
     public static void setMargin(final float horizontalMargin, final float verticalMargin) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                toast.setMargin(horizontalMargin, verticalMargin);
-            }
-        });
+        postToMainThread(() -> toast.setMargin(horizontalMargin, verticalMargin));
     }
 
     /**
@@ -69,24 +55,16 @@ public final class ToastUtils {
      * @see Toast#getGravity
      */
     public static void setGravity(final int gravity, final int xOffset, final int yOffset) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                toast.setGravity(gravity, xOffset, yOffset);
-            }
-        });
+        postToMainThread(() -> toast.setGravity(gravity, xOffset, yOffset));
     }
 
     /**
      * Set the view to show.
      */
     public static void setView(@NonNull final View view) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                weakRef = new WeakReference<>(view);
-                toast.setView(view);
-            }
+        postToMainThread(() -> {
+            weakRef = new WeakReference<>(view);
+            toast.setView(view);
         });
     }
 
@@ -105,70 +83,41 @@ public final class ToastUtils {
     }
 
     public static void showShort() {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                toast.setDuration(Toast.LENGTH_SHORT);
-                toast.show();
-            }
+        postToMainThread(() -> {
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
         });
     }
     
     public static void showShort(@NonNull final CharSequence text) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                show(text, Toast.LENGTH_SHORT);
-            }
-        });
+        postToMainThread(() -> show(text, Toast.LENGTH_SHORT));
     }
 
     public static void showShort(@StringRes final int resId) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                show(AppHolder.getInstance().getContext().getText(resId), Toast.LENGTH_SHORT);
-            }
-        });
+        postToMainThread(() -> show(AppHolder.getInstance().getContext().getText(resId), Toast.LENGTH_SHORT));
     }
 
     public static void showLong() {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.show();
-            }
+        postToMainThread(() -> {
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.show();
         });
     }
     
     public static void showLong(@NonNull final CharSequence text) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                show(text, Toast.LENGTH_LONG);
-            }
-        });
+        postToMainThread(() -> show(text, Toast.LENGTH_LONG));
     }
 
     public static void showLong(@StringRes final int resId) {
-        postToMainThread(new Runnable() {
-            @Override
-            public void run() {
-                show(AppHolder.getInstance().getContext().getText(resId), Toast.LENGTH_LONG);
-            }
-        });
+        postToMainThread(() -> show(AppHolder.getInstance().getContext().getText(resId), Toast.LENGTH_LONG));
     }
 
     private static void postToMainThread(final Runnable runnable) {
         if (toast == null) {
             handler = new Handler(AppHolder.getInstance().getMainLooper());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    toast = Toast.makeText(AppHolder.getInstance().getContext(), "", Toast.LENGTH_SHORT);
-                    runnable.run();
-                }
+            handler.post(() -> {
+                toast = Toast.makeText(AppHolder.getInstance().getContext(), "", Toast.LENGTH_SHORT);
+                runnable.run();
             });
         } else if (Looper.myLooper() == AppHolder.getInstance().getMainLooper()) {
             runnable.run();

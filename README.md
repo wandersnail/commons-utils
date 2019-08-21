@@ -1,6 +1,5 @@
 ## 代码托管
-[![](https://jitpack.io/v/wandersnail/commons-utils.svg)](https://jitpack.io/#wandersnail/commons-utils)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.wandersnail/commons-utils/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.wandersnail/commons-utils)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.wandersnail/commons-utils/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cn.wandersnail/commons-utils)
 [![Download](https://api.bintray.com/packages/wandersnail/android/commons-utils/images/download.svg) ](https://bintray.com/wandersnail/android/commons-utils/_latestVersion)
 
 
@@ -10,7 +9,8 @@
 ```
 dependencies {
 	...
-	implementation 'com.github.wandersnail:commons-utils:latestVersion'
+	implementation 'cn.wandersnail:commons-utils:latestVersion'
+	implementation 'cn.wandersnail:commons-base:latestVersion'
 }
 ```
 

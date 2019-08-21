@@ -178,9 +178,9 @@ public class StringUtils {
     @NonNull
     public static String toDuration(int duration, String format) {
         if (format != null) {
-            return String.format(Locale.US, format, duration / 3600, duration % 3600 / 60, duration % 60);
+            return String.format(Locale.ENGLISH, format, duration / 3600, duration % 3600 / 60, duration % 60);
         } else {
-            return String.format(Locale.US, "%02d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60);
+            return String.format(Locale.ENGLISH, "%02d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60);
         }
     }
 }

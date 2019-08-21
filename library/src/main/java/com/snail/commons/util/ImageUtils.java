@@ -118,7 +118,7 @@ public class ImageUtils {
     public static Bitmap getBitmap(@NonNull String path, int w, int h) {
         try {
             BitmapFactory.Options opts = new BitmapFactory.Options();
-            // 设置为ture只获取图片大小
+            // 设置为true只获取图片大小
             opts.inJustDecodeBounds = true;
             opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
             // 返回为空

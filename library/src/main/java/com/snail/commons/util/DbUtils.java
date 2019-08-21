@@ -38,15 +38,15 @@ public class DbUtils {
     public static class Column {
         public String name;
         public String dataType;
-        public Object defualtValue;
+        public Object defaultValue;
 
         public Column() {
         }
 
-        public Column(String name, String dataType, Object defualtValue) {
+        public Column(String name, String dataType, Object defaultValue) {
             this.name = name;
             this.dataType = dataType;
-            this.defualtValue = defualtValue;
+            this.defaultValue = defaultValue;
         }
     }
 
@@ -66,7 +66,7 @@ public class DbUtils {
         }
     }
 
-    private static void invokeVoidNoPrama(Object db, String methodName) {
+    private static void invokeVoidNoParam(Object db, String methodName) {
         try {
             db.getClass().getMethod(methodName).invoke(db);
         } catch (Exception e) {
@@ -75,15 +75,15 @@ public class DbUtils {
     }
 
     private static void beginTransaction(Object db) {
-        invokeVoidNoPrama(db, "beginTransaction");
+        invokeVoidNoParam(db, "beginTransaction");
     }
 
     private static void endTransaction(Object db) {
-        invokeVoidNoPrama(db, "endTransaction");
+        invokeVoidNoParam(db, "endTransaction");
     }
 
     private static void setTransactionSuccessful(Object db) {
-        invokeVoidNoPrama(db, "setTransactionSuccessful");
+        invokeVoidNoParam(db, "setTransactionSuccessful");
     }
 
     /**
@@ -124,16 +124,16 @@ public class DbUtils {
                 int defaultValueIndex = cursor.getColumnIndex("dflt_value");
                 switch (cursor.getType(defaultValueIndex)) {
                     case Cursor.FIELD_TYPE_BLOB:
-                        columns[index].defualtValue = cursor.getBlob(defaultValueIndex);
+                        columns[index].defaultValue = cursor.getBlob(defaultValueIndex);
                         break;
                     case Cursor.FIELD_TYPE_FLOAT:
-                        columns[index].defualtValue = cursor.getDouble(defaultValueIndex);
+                        columns[index].defaultValue = cursor.getDouble(defaultValueIndex);
                         break;
                     case Cursor.FIELD_TYPE_INTEGER:
-                        columns[index].defualtValue = cursor.getLong(defaultValueIndex);
+                        columns[index].defaultValue = cursor.getLong(defaultValueIndex);
                         break;
                     case Cursor.FIELD_TYPE_STRING:
-                        columns[index].defualtValue = cursor.getString(defaultValueIndex);
+                        columns[index].defaultValue = cursor.getString(defaultValueIndex);
                         break;
                 }
                 index++;
@@ -200,16 +200,16 @@ public class DbUtils {
             for (Column column : columns) {
                 String sql = "ALTER TABLE " + tableName + " ADD " + column.name + " " + column.dataType;
                 Object[] bindArgs = null;
-                if (column.defualtValue != null) {
-                    if (column.defualtValue instanceof String) {
-                        sql += " DEFAULT '" + column.defualtValue + "'";
-                    } else if (column.defualtValue instanceof byte[]) {
+                if (column.defaultValue != null) {
+                    if (column.defaultValue instanceof String) {
+                        sql += " DEFAULT '" + column.defaultValue + "'";
+                    } else if (column.defaultValue instanceof byte[]) {
                         //如果是字节数组，先插入列，再设置默认数据
                         execSQL(db, sql);
                         sql = "UPDATE " + tableName + " SET " + column.name + "=?";
-                        bindArgs = new Object[]{column.defualtValue};
+                        bindArgs = new Object[]{column.defaultValue};
                     } else {
-                        sql += " DEFAULT " + column.defualtValue;
+                        sql += " DEFAULT " + column.defaultValue;
                     }
                 }
                 if (bindArgs == null) {
