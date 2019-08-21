@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 def lib_version = '1.0.0'
 def lib_group = 'cn.wandersnail'
-def lib_artifact = 'commons-utils'
+def lib_artifact = 'common-utils'
 def lib_packaging = 'aar'
 def lib_description = 'commons-utils for Android'
 group = lib_group
@@ -38,11 +38,11 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly "androidx.appcompat:appcompat:$appcompat_version"
     compileOnly "androidx.exifinterface:exifinterface:$exifinterface_version"
-    compileOnly 'cn.wandersnail:commons-base:1.0.0'
+    compileOnly 'cn.wandersnail:common-base:1.0.0'
 }
 
 publish {
-    repoName="android"//仓库名
+    repoName="androidx"//仓库名
     userOrg = 'wandersnail' //bintray.com用户名  
     groupId = lib_group //jcenter上的路径  
     artifactId = lib_artifact //项目名称  
