@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'maven'
 
-def lib_version = '1.0.2'
+def lib_version = '1.0.3'
 def user_name = 'wandersnail'
 def lib_group = 'cn.wandersnail'
 def lib_artifact = 'common-utils'
@@ -40,7 +40,7 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly "androidx.appcompat:appcompat:$appcompat_version"
     compileOnly "androidx.exifinterface:exifinterface:$exifinterface_version"
-    compileOnly 'cn.wandersnail:common-base:1.0.1'
+    compileOnly 'cn.wandersnail:common-base:1.0.2'
 }
 
 task sourcesJar(type: Jar) {
