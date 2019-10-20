@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.os.EnvironmentCompat;
 import cn.wandersnail.commons.util.entity.Storage;
 
@@ -171,6 +172,7 @@ public class SystemUtils {
     /**
      * 判断屏幕是否亮着
      */
+    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
     public static boolean isScreenOn(@NonNull Context context) {
         PowerManager powerManager = (PowerManager) context.getApplicationContext().getSystemService(Context.POWER_SERVICE);
         return powerManager != null && powerManager.isInteractive();
