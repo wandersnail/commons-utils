@@ -6,12 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.security.SecureRandom;
 import java.util.Random;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -133,18 +130,15 @@ public class EncryptUtils {
      * @return md5值，文件不存在返回null
      */
     public static String getFileMD5Code(String path) {
-        InputStream fis = null;
         try {
-            fis = new FileInputStream(path);
+            InputStream fis = new FileInputStream(path);
             String code = getMD5Code(fis);
             fis.close();
             return code;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            IOUtils.closeQuietly(fis);
         }
+        return null;
     }
 
     /**
@@ -154,18 +148,15 @@ public class EncryptUtils {
      * @return SHA1值，文件不存在返回null
      */
     public static String getFileSHA1Code(String path) {
-        InputStream fis = null;
         try {
-            fis = new FileInputStream(path);
+            InputStream fis = new FileInputStream(path);
             String code = getSHA1Code(fis);
             fis.close();
             return code;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            IOUtils.closeQuietly(fis);
         }
+        return null;
     }
 
     /**
@@ -175,18 +166,15 @@ public class EncryptUtils {
      * @return md5值，文件不存在返回null
      */
     public static String getFileMD5Code(File file) {
-        InputStream fis = null;
         try {
-            fis = new FileInputStream(file);
+            InputStream fis = new FileInputStream(file);
             String code = getMD5Code(fis);
             fis.close();
             return code;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            IOUtils.closeQuietly(fis);
         }
+        return null;
     }
 
     /**
@@ -196,18 +184,15 @@ public class EncryptUtils {
      * @return SHA1值，文件不存在返回null
      */
     public static String getFileSHA1Code(File file) {
-        InputStream fis = null;
         try {
-            fis = new FileInputStream(file);
+            InputStream fis = new FileInputStream(file);
             String code = getSHA1Code(fis);
             fis.close();
             return code;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            IOUtils.closeQuietly(fis);
         }
+        return null;
     }
 
     /**
@@ -284,9 +269,10 @@ public class EncryptUtils {
      * @return 密文
      */
     public static String encrypt(String seed, String plain, String iv) throws Exception {
-        byte[] rawKey = getRawKey(seed.getBytes());
-        byte[] encrypted = encrypt(rawKey, plain.getBytes(), iv.getBytes());
-        return Base64.encodeToString(encrypted, Base64.DEFAULT);
+        SecretKeySpec keySpec = new SecretKeySpec(seed.getBytes(), "AES");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes()));
+        return Base64.encodeToString(cipher.doFinal(plain.getBytes()), Base64.DEFAULT);
     }
 
     /**
@@ -297,32 +283,10 @@ public class EncryptUtils {
      * @return 原文
      */
     public static String decrypt(String seed, String encrypted, String iv) throws Exception {
-        byte[] rawKey = getRawKey(seed.getBytes());
+        SecretKeySpec keySpec = new SecretKeySpec(seed.getBytes(), "AES");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes()));
         byte[] enc = Base64.decode(encrypted.getBytes(), Base64.DEFAULT);
-        byte[] result = decrypt(rawKey, enc, iv.getBytes());
-        return new String(result);
-    }
-
-    private static byte[] getRawKey(byte[] seed) throws Exception {
-        KeyGenerator keygen = KeyGenerator.getInstance("AES");
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-        random.setSeed(seed);
-        keygen.init(128, random); // 192 and 256 bits may not be available
-        SecretKey key = keygen.generateKey();
-        return key.getEncoded();
-    }
-
-    private static byte[] encrypt(byte[] raw, byte[] plain, byte[] iv) throws Exception {
-        SecretKeySpec keySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(iv));
-        return cipher.doFinal(plain);
-    }
-
-    private static byte[] decrypt(byte[] raw, byte[] encrypted, byte[] iv) throws Exception {
-        SecretKeySpec keySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv));
-        return cipher.doFinal(encrypted);
+        return new String(cipher.doFinal(enc));
     }
 }
