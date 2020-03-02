@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'maven'
 
-def lib_version = '1.0.7'
+def lib_version = '1.0.8'
 def user_name = 'wandersnail'
 def lib_group = 'cn.wandersnail'
 def lib_artifact = 'common-utils'
@@ -58,15 +58,9 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-task classJar(type: Jar, dependsOn: ['assembleRelease', 'sourcesJar']) {
-    from(project.zipTree("${project.buildDir.absolutePath}/intermediates/packaged-classes/release/classes.jar"))
-    exclude '**/R.class', '**/R$*.class', '**/**/BuildConfig.class', '**/**/BuildConfig$*.class'
-}
-
 artifacts {
     archives sourcesJar
     archives javadocJar
-    archives classJar
 }
 
 publish {
